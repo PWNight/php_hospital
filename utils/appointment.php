@@ -1,5 +1,5 @@
 <?
-include_once('utils.php');
+include_once 'utils.php';
     class Appointment{
         function showAll(){
             $conn = conn();
@@ -76,7 +76,7 @@ include_once('utils.php');
                 }
             }
             if(count($invalidKeys) != 0){
-                return jsonMessage(['status'=>false,'message'=>'Someone fields is empty', 'data'=>$invalidKeys]);
+                return jsonMessage(400,['message'=>'Someone fields is empty', 'data'=>$invalidKeys]);
             }
             $sql = "INSERT INTO appointments (fk_patient, fk_doctor, timestamp_start, timestamp_end, fk_depart, 
                 complaints, diagnosis, fk_meddoc, note) 
@@ -86,7 +86,7 @@ include_once('utils.php');
                 $data['diagnosis'].",".$data['fk_meddoc'].",".$data['note']
             .")";
             mysqli_execute_query($conn,$sql);
-            return jsonMessage(['success'=>true,'message'=>'success added appointment']);
+            return jsonMessage(200,['message'=>'success added appointment']);
         }
         function edit($id,$data){
 
@@ -94,10 +94,7 @@ include_once('utils.php');
         function delete($id){
             $conn = conn();
             $sql = "DELETE FROM appointments WHERE id = $id";
-            $result = mysqli_execute_query($conn,$sql);
-            if($result){
-                return jsonMessage(['success'=>true,'message'=>'success delete appointment']);
-            }
-            return jsonMessage(['success'=>false,'message'=>'error']);
+            mysqli_execute_query($conn,$sql);
+            return jsonMessage(200,['message'=>'success delete appointment']);
         }
     }

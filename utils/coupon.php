@@ -1,5 +1,5 @@
 <?
-include_once("utils.php");
+include_once "utils.php";
     class Coupon{
         function add($data){
             $data = json_decode($data,1);
@@ -17,14 +17,14 @@ include_once("utils.php");
                 }
             }
             if(count($invalidKeys) != 0){
-                return jsonMessage(['status'=>false,'message'=>'Someone fields is empty', 'data'=>$invalidKeys]);
+                return jsonMessage(400,['message'=>'Someone fields is empty', 'data'=>$invalidKeys]);
             }
             $sql = "INSERT INTO coupons (fk_doctor, fk_patient, datetime, cabinet, status) 
                 VALUES (".$data['fk_doctor'].",".$data['fk_patient'].",".
                 $data['datetime'].",".$data['cabinet'].",".$data['status']
             .")";
             mysqli_execute_query($conn,$sql);
-            return jsonMessage(['success'=>true,'message'=>'success added coupon']);
+            return jsonMessage(200, ['message'=>'Success added coupon']);
         }
         function edit($id,$data){
 
@@ -32,10 +32,8 @@ include_once("utils.php");
         function delete($id){
             $conn = conn();
             $sql = "DELETE FROM coupons WHERE id = $id";
-            $result = mysqli_execute_query($conn,$sql);
-            if($result){
-                return jsonMessage(['success'=>true,'message'=>'success delete coupon']);
-            }
-            return jsonMessage(['success'=>false,'message'=>'error']);
+            mysqli_execute_query($conn,$sql);
+            return jsonMessage(200,['message'=>'Success delete coupon']);
+
         }
     }
