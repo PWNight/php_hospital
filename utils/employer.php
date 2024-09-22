@@ -21,7 +21,7 @@ include_once("utils.php");
             $result = mysqli_query($conn,$sql);
             $dataArray = mysqli_fetch_all($result,MYSQLI_ASSOC);
             if(empty($dataArray)){
-                return jsonMessage(404,['message'=>'Patients not found']);
+                return jsonMessage(404,['message'=>'Employer not found']);
             }
             return jsonMessage(200,$dataArray);
         }
@@ -50,7 +50,7 @@ include_once("utils.php");
             $result = mysqli_query($conn,$sql);
             $dataArray = mysqli_fetch_assoc($result);
             if(empty($dataArray)){
-                return jsonMessage(404,['message'=>'Patient not found']);
+                return jsonMessage(404,['message'=>'Employer not found']);
             }
             return jsonMessage(200,$dataArray);
         }
@@ -59,7 +59,7 @@ include_once("utils.php");
             $conn = conn();
 
             $dataArray = ["fio"=>$data['fio'],"passport_data"=>$data['passport_data'],
-                "home_adress"=>$data['home_adress'],
+                "home_address"=>$data['home_address'],
                 "phone_number"=>$data['phone_number'],
                 "email"=>$data['email'],"fk_position"=>$data['fk_position'],
                 "fk_depart"=>$data['fk_depart']
@@ -71,16 +71,16 @@ include_once("utils.php");
                 }
             }
             if(count($invalidKeys) != 0){
-                return jsonMessage(['status'=>false,'message'=>'Someone fields is empty', 'data'=>$invalidKeys]);
+                return jsonMessage(400,['message'=>'Someone fields is empty', 'data'=>$invalidKeys]);
             }
-            $sql = "INSERT INTO employers (fio, passport_data, home_adress, phone_number, email, fk_position, fk_depart) 
+            $sql = "INSERT INTO employers (fio, passport_data, home_address, phone_number, email, fk_position, fk_depart) 
                 VALUES (".$data['fio'].",".$data['passport_data'].",".
                 $data['home_adress'].",".$data['phone_number'].",".
                 $data['email'].",".$data['fk_position'].",".
                 $data['fk_depart']
             .")";
             mysqli_execute_query($conn,$sql);
-            return jsonMessage(['success'=>true,'message'=>'success added employer']);
+            return jsonMessage(200,['message'=>'Success added employer']);
         }
         function edit($id,$data){
 
@@ -88,10 +88,7 @@ include_once("utils.php");
         function delete($id){
             $conn = conn();
             $sql = "DELETE FROM employers WHERE id = $id";
-            $result = mysqli_execute_query($conn,$sql);
-            if($result){
-                return jsonMessage(['success'=>true,'message'=>'success delete employer']);
-            }
-            return jsonMessage(['success'=>false,'message'=>'error']);
+            mysqli_execute_query($conn,$sql);
+            return jsonMessage(200,['message'=>'success delete employer']);
         }
     }
