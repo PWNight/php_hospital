@@ -36,21 +36,25 @@ include_once 'utils.php';
             }
             $conn = conn();
             $sql = "SELECT 
-                    p.fio, 
-                    p.passport_data, 
-                    p.birth_date, 
-                    p.home_address, 
-                    p.phone_number, 
-                    p.email, 
-                    a.id AS appointment_id
+                    p.fio AS patient_fio,
+                    e.fio AS doctor_fio,
+                    d.name AS depart_name,
+                    a.timestamp_start,
+                    a.timestamp_end,
+                    a.complaints,
+                    a.diagnosis,
+                    a.fk_meddoc,
+                    a.note
+                
                 FROM 
-                    patients p
-                LEFT JOIN 
-                    appointments a ON p.id = a.fk_patient
-                WHERE 
-                    p.id = $id
-                ORDER BY 
-                    p.id DESC
+                    appointments a
+                JOIN 
+                    patients p ON a.fk_patient = p.id
+                JOIN 
+                    employers e ON a.fk_doctor = e.id
+                JOIN
+                    departaments d ON a.fk_depart = d.dep_id
+                WHERE a.id = $id
             ";
             $result = mysqli_query($conn,$sql);
             $dataArray = mysqli_fetch_assoc($result);

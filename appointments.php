@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hospital: Результаты приёмов</title>
 </head>
 <body>
     <table>
@@ -27,11 +27,11 @@
                     $data = json_decode($data,1);
                     foreach($data as $key => $value){
                         switch($key){
-                            case 'appointment_id':
+                            case 'fk_meddoc':
                                 if(empty($value)){
                                     echo "<td>Отсутствует</td>";
                                 }else{
-                                    echo "<td><a href='appointments.php?id=$value'>Посмотреть</a></td>";
+                                    echo "<td><a href='medicaldocs.php?id=$value'>Посмотреть</a></td>";
                                 }
                                 break;
                             default:
