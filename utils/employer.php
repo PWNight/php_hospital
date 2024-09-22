@@ -1,6 +1,59 @@
 <?
 include_once("utils.php");
     class Employer{
+        function showAll(){
+            $conn = conn();
+            $sql = "SELECT 
+                    e.fio, 
+                    e.passport_data, 
+                    e.home_address, 
+                    e.phone_number, 
+                    e.email, 
+                    p.name as post_name,
+                    d.name as dep_name
+                FROM 
+                    employers e
+                JOIN 
+                    posts p ON p.post_id = e.fk_post
+                JOIN 
+                    departaments d ON d.dep_id = e.fk_depart
+            ";
+            $result = mysqli_query($conn,$sql);
+            $dataArray = mysqli_fetch_all($result,MYSQLI_ASSOC);
+            if(empty($dataArray)){
+                return jsonMessage(404,['message'=>'Patients not found']);
+            }
+            return jsonMessage(200,$dataArray);
+        }
+        function showOne($id){
+            if(!isset($id)){
+                return jsonMessage(400,['message'=>'Id is empty']);
+            }
+            $conn = conn();
+            $sql = "SELECT 
+                    e.fio, 
+                    e.passport_data, 
+                    e.home_address, 
+                    e.phone_number, 
+                    e.email, 
+                    p.name as post_name,
+                    d.name as dep_name
+                FROM 
+                    employers e
+                JOIN 
+                    posts p ON p.post_id = e.fk_post
+                JOIN 
+                    departaments d ON d.dep_id = e.fk_depart
+                WHERE
+                    e.id = $id
+            ";
+            $result = mysqli_query($conn,$sql);
+            $dataArray = mysqli_fetch_assoc($result);
+            if(empty($dataArray)){
+                return jsonMessage(404,['message'=>'Patient not found']);
+            }
+            return jsonMessage(200,$dataArray);
+        }
         function add($data){
             $data = json_decode($data,1);
             $conn = conn();
