@@ -1,7 +1,5 @@
 <?php
 $tableName = $_GET['table'] ?? null;
-
-// Whitelist of allowed table names
 $allowedTables = ['patients', 'employers', 'medicaldocs', 'coupons', 'appointments'];
 
 if ($tableName !== null && in_array($tableName, $allowedTables)) {
@@ -118,7 +116,6 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
             echo "</tbody></table>";
             break;
 
-        // Add cases for 'medicaldocs', 'coupons', and 'appointments' as needed
         case 'medicaldocs':
             // Implement logic for medical documents
             break;
