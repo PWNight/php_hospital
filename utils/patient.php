@@ -4,7 +4,8 @@ include_once 'utils.php';
 class Patient {
     function showAll(): array{
         $conn = conn();
-        $sql = "SELECT 
+        $sql = "SELECT
+                    p.id,
                     p.fio, 
                     p.passport_data, 
                     p.birth_date, 

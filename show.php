@@ -27,17 +27,16 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
             if ($id !== null) {
                 $data = $patient->showOne($id);
                 if (!empty($data)) {
-                    foreach ($data as $value) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($value['fio']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['passport_data']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['birth_date']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['home_address']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['phone_number']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['email']) . "</td>";
-                        echo "<td>" . (empty($value['appointment_id']) ? "Отсутствует" : "<a href='appointments.php?id=" . htmlspecialchars($value['appointment_id']) . "'>Посмотреть</a>") . "</td>";
-                        echo "</tr>";
-                    }
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($data['fio']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['passport_data']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['birth_date']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['home_address']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['phone_number']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['email']) . "</td>";
+                    echo "<td>" . (empty($data['appointment_id']) ? "Отсутствует" : "<a href='appointments.php?id=" . htmlspecialchars($value['appointment_id']) . "'>Посмотреть</a>") . "</td>";
+                    echo "<td><a href='edit.php?table=employers&id=". htmlspecialchars($id) ."'>Редактировать</a>";
+                    echo "</tr>";
                 } else {
                     echo "<tr><td>Пациент не найден.</td></tr>";
                 }
@@ -46,13 +45,14 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
                 if (!empty($data)) {
                     foreach ($data as $patientData) {
                         echo "<tr>";
-                        foreach ($patientData as $key => $value) {
-                            if ($key === 'appointment_id') {
-                                echo "<td>" . (empty($value) ? "Отсутствует" : "<a href='appointments.php?id=" . htmlspecialchars($value) . "'>Посмотреть</a>") . "</td>";
-                            } else {
-                                echo "<td>" . htmlspecialchars($value) . "</td>";
-                            }
-                        }
+                        echo "<td>" . htmlspecialchars($patientData['fio']) . "</td>";
+                        echo "<td>" . htmlspecialchars($patientData['passport_data']) . "</td>";
+                        echo "<td>" . htmlspecialchars($patientData['birth_date']) . "</td>";
+                        echo "<td>" . htmlspecialchars($patientData['home_address']) . "</td>";
+                        echo "<td>" . htmlspecialchars($patientData['phone_number']) . "</td>";
+                        echo "<td>" . htmlspecialchars($patientData['email']) . "</td>";
+                        echo "<td>" . (empty($patientData['appointment_id']) ? "Отсутствует" : "<a href='appointments.php?id=" . htmlspecialchars($value['appointment_id']) . "'>Посмотреть</a>") . "</td>";
+                        echo "<td><a href='edit.php?table=patients&id=". htmlspecialchars($patientData['id']) ."'>Редактировать</a>";
                         echo "</tr>";
                     }
                 } else {
