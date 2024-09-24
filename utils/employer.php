@@ -55,7 +55,7 @@ include_once("utils.php");
             }
         }
         function add($data){
-            $data = json_decode($data,1);
+            /*$data = json_decode($data,1);
             $conn = conn();
 
             $dataArray = ["fio"=>$data['fio'],"passport_data"=>$data['passport_data'],
@@ -81,9 +81,29 @@ include_once("utils.php");
             .")";
             mysqli_execute_query($conn,$sql);
             return jsonMessage(200,['message'=>'Success added employer']);
-        }
-        function edit($id,$data){
-
+            */
+        }    function edit(int $id, array $data): bool {
+            $fio = $data['fio'] ?? null;
+            $passportData = $data['passport_data'] ?? null;
+            $homeAddress = $data['home_address'] ?? null;
+            $phoneNumber = $data['phone_number'] ?? null;
+            $email = $data['email'] ?? null;
+            $postId = $data['post_id'] ?? null;
+            $departamentId = $data['departament_id'] ?? null;
+    
+            $conn = conn();
+            $sql = "UPDATE `employers` SET `fio` = ?,
+            `passport_data` = ?, `home_address` = ?,
+            `phone_number` = ?, `email` = ?,
+            `fk_post` = ?, `fk_depart` = ? WHERE `id` = ?";
+    
+            $stmt = mysqli_prepare($conn, $sql);
+            $bindParams = mysqli_stmt_bind_param($stmt, "sssssssi", $fio, $passportData, $homeAddress, $phoneNumber, $email, $postId, $departamentId, $id);
+            if($stmt !== false && $bindParams !== false){
+                return mysqli_stmt_execute($stmt);
+            }else{
+                return false;
+            }
         }
         function delete($id){
             $conn = conn();

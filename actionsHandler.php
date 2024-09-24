@@ -32,7 +32,7 @@ if ($tableName !== null && $uId !== null && $actionType !== null && in_array($ta
                     break;
                 case 'edit':
                     $employer -> edit($uId,$_POST);
-                    header('Location: show.php?table=employer');
+                    header('Location: show.php?table=employers');
                     break;
                 case 'delete':
                     break;
