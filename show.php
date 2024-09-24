@@ -84,29 +84,32 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
             if ($id !== null) {
                 $data = $employer->showOne($id);
                 if (!empty($data)) {
-                    foreach ($data as $value) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($value['fio']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['passport_data']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['home_address']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['phone_number']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['email']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['post_name']) . "</td>";
-                        echo "<td>" . htmlspecialchars($value['dep_name']) . "</td>";
-                        echo "<td>" . (empty($value['appointment_id']) ? "Отсутствует" : "<a href='appointments.php?id=" . htmlspecialchars($value['appointment_id']) . "'>Посмотреть</a>") . "</td>";
-                        echo "</tr>";
-                    }
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($data['fio']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['passport_data']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['home_address']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['phone_number']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['email']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['post_name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['dep_name']) . "</td>";
+                    echo "<td><a href='edit.php?table=employers&id=". htmlspecialchars($id) ."'>Редактировать</a>";
+                    echo "</tr>";
                 } else {
-                    echo "<tr><td colspan='7'>Сотрудник не найден.</td></tr>";
+                    echo "<tr><td>Сотрудник не найден.</td></tr>";
                 }
             } else {
                 $data = $employer->showAll();
                 if (!empty($data)) {
                     foreach ($data as $employerData) {
                         echo "<tr>";
-                        foreach ($employerData as $key => $value) {
-                            echo "<td>" . htmlspecialchars($value) . "</td>";
-                        }
+                        echo "<td>" . htmlspecialchars($employerData['fio']) . "</td>";
+                        echo "<td>" . htmlspecialchars($employerData['passport_data']) . "</td>";
+                        echo "<td>" . htmlspecialchars($employerData['home_address']) . "</td>";
+                        echo "<td>" . htmlspecialchars($employerData['phone_number']) . "</td>";
+                        echo "<td>" . htmlspecialchars($employerData['email']) . "</td>";
+                        echo "<td>" . htmlspecialchars($employerData['post_name']) . "</td>";
+                        echo "<td>" . htmlspecialchars($employerData['dep_name']) . "</td>";
+                        echo "<td><a href='edit.php?table=employers&id=". htmlspecialchars($employerData['id']) ."'>Редактировать</a>";
                         echo "</tr>";
                     }
                 } else {

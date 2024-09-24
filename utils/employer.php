@@ -4,6 +4,7 @@ include_once("utils.php");
         function showAll(): array{
             $conn = conn();
             $sql = "SELECT 
+                    e.id,
                     e.fio, 
                     e.passport_data, 
                     e.home_address, 
