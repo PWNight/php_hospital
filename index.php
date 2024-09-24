@@ -6,11 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="patients.php">Просмотреть всех пациентов</a>
-    <a href="employers.php">Просмотреть всех сотрудников</a>
-    <a href="medicaldocs.php">Просмотреть все мед. документы</a>
-    <a href="coupons.php">Просмотреть все талоны</a>
-    <a href="appointments.php">Просмотреть все приёмы врача</a>
-    <a href="schelude.php">Просмотреть расписание врачей</a>
+    <div>
+        <h1>Просмотр таблиц</h1>
+        <a href="show.php?table=patients">Пациенты</a>
+        <a href="show.php?table=employers">Сотрудники</a>
+    </div>
 </body>
 </html>
