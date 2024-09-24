@@ -2,6 +2,7 @@
 include_once "utils.php";
     class Coupon{
         function add($data){
+            /*
             $data = json_decode($data,1);
             $conn = conn();
 
@@ -25,6 +26,7 @@ include_once "utils.php";
             .")";
             mysqli_execute_query($conn,$sql);
             return jsonMessage(200, ['message'=>'Success added coupon']);
+            */
         }
         function edit($id,$data){
 

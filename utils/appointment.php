@@ -64,6 +64,7 @@ include_once 'utils.php';
             return jsonMessage(200,$dataArray);
         }
         function add($data){
+            /*
             $data = json_decode($data,1);
             $conn = conn();
 
@@ -91,6 +92,7 @@ include_once 'utils.php';
             .")";
             mysqli_execute_query($conn,$sql);
             return jsonMessage(200,['message'=>'success added appointment']);
+            */
         }
         function edit($id,$data){
 

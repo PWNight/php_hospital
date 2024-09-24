@@ -1,6 +1,13 @@
 <?
     class Schelude{
+        function show(){
+
+        }
+        function showByEmployer(){
+
+        }
         function add($data){
+            /*
             $data = json_decode($data,1);
             $conn = conn();
 
@@ -25,18 +32,14 @@
             .")";
             mysqli_execute_query($conn,$sql);
             return jsonMessage(['success'=>true,'message'=>'success added schelude']);
+            */
         }
         function edit($id,$date,$data){
-            $conn = conn();
-            $result = mysqli_execute_query($conn,"SELECT * FROM schelude WHERE fk_employer = $id AND date = $date",MYSQL_ASSOC);
-            $rows = mysqli_fetch_all($result);
-            if(count($rows) == 0){
-                return jsonMessage(['success'=>false,'message'=>'schelude for this employer and this date not found']);
-            }
+
         }
-        function delete($id){
+        function delete($uId,$date){
             $conn = conn();
-            $sql = "DELETE FROM schelude WHERE fk_employer = $id";
+            $sql = "DELETE FROM schelude WHERE fk_employer = $uId AND date = '$date'";
             return mysqli_execute_query($conn,$sql);
         }
     }

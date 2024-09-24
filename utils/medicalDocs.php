@@ -2,6 +2,7 @@
 include_once("utils.php");
     class Employer{
         function add($data){
+            /*
             $data = json_decode($data,1);
             $conn = conn();
 
@@ -24,6 +25,7 @@ include_once("utils.php");
             .")";
             mysqli_execute_query($conn,$sql);
             return jsonMessage(['success'=>true,'message'=>'success added medical document']);
+            */
         }
         function edit($id,$data){
 
