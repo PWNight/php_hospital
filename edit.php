@@ -12,7 +12,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
             if ($id !== null) {
                 $data = $patient->showOne($id);
                 if (!empty($data)) {
-                    echo "<form action='actionsHandler.php?action=edit&table=patients&id=$id' method='POST'>";
+                    echo "<form action='actionsHandler.php?action=edit&table=patients&id=$id' method='post' enctype='multipart/form-data'>";
                     echo "<input type='text' name='fio' value='" . htmlspecialchars($data['fio']) . "'>";
                     echo "<input type='text' name='passport_data' value='" . htmlspecialchars($data['passport_data']) . "'>";
                     echo "<input type='date' name='birth_date' value='" . htmlspecialchars($data['birth_date']) . "'>";

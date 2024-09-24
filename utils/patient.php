@@ -56,7 +56,7 @@ class Patient {
     }
 
     function add(string $data): string {
-        $data = json_decode($data, true);
+        /*$data = json_decode($data, true);
         $conn = conn();
 
         $dataArray = [
@@ -89,10 +89,30 @@ class Patient {
             return jsonMessage(200, ['message' => 'Successfully added patient']);
         }
         return jsonMessage(400, ['message' => 'Error adding patient']);
+        */
     }
 
-    function edit(int $id, string $data): string {
-        // Реализация функции редактирования пациента
+    function edit(int $id, array $data): bool {
+        $fio = $data['fio'] ?? null;
+        $passportData = $data['passport_data'] ?? null;
+        $birthDate = $data['birth_date'] ?? null;
+        $homeAddress = $data['home_address'] ?? null;
+        $phoneNumber = $data['phone_number'] ?? null;
+        $email = $data['email'] ?? null;
+
+        $conn = conn();
+        $sql = "UPDATE `patients` SET `fio` = ?,
+        `passport_data` = ?,`birth_date` = ?,
+        `home_address` = ?,`phone_number` = ?,
+        `email` = ? WHERE `id` = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        $bindParams = mysqli_stmt_bind_param($stmt, "ssssssi", $fio, $passportData, $birthDate, $homeAddress, $phoneNumber, $email, $id);
+        if($stmt !== false && $bindParams !== false){
+            return mysqli_stmt_execute($stmt);
+        }else{
+            return false;
+        }
     }
 
     function delete(int $id): string {
