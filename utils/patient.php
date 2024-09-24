@@ -1,9 +1,10 @@
-<?
+<?php
 include_once 'utils.php';
-    class Patient{
-        function showAll(){
-            $conn = conn();
-            $sql = "SELECT 
+
+class Patient {
+    function showAll(): array{
+        $conn = conn();
+        $sql = "SELECT 
                     p.fio, 
                     p.passport_data, 
                     p.birth_date, 
@@ -16,21 +17,20 @@ include_once 'utils.php';
                 LEFT JOIN 
                     appointments a ON p.id = a.fk_patient
                 ORDER BY 
-                    p.id DESC
-            ";
-            $result = mysqli_query($conn,$sql);
-            $dataArray = mysqli_fetch_all($result,MYSQLI_ASSOC);
-            if(empty($dataArray)){
-                return jsonMessage(404,['message'=>'Patients not found']);
-            }
-            return jsonMessage(200,$dataArray);
+                    p.id DESC";
+
+        $result = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        if (empty($data)) {
+            return [];
+        }else{
+            return $data;
         }
-        function showOne($id){
-            if(!isset($id)){
-                return jsonMessage(400,['message'=>'Id is empty']);
-            }
-            $conn = conn();
-            $sql = "SELECT 
+    }
+    
+    function showOne(int $id): array {
+        $conn = conn();
+        $sql = "SELECT 
                     p.fio, 
                     p.passport_data, 
                     p.birth_date, 
@@ -43,51 +43,69 @@ include_once 'utils.php';
                 LEFT JOIN 
                     appointments a ON p.id = a.fk_patient
                 WHERE 
-                    p.id = $id
-                ORDER BY 
-                    p.id DESC
-            ";
-            $result = mysqli_query($conn,$sql);
-            $dataArray = mysqli_fetch_assoc($result);
-            if(empty($dataArray)){
-                return jsonMessage(404,['message'=>'Patient not found']);
-            }
-            return jsonMessage(200,$dataArray);
-        }
-        function add($data){
-            $data = json_decode($data,1);
-            $conn = conn();
+                    p.id = $id";
+        
+        $result = mysqli_query($conn,$sql);
+        $data = mysqli_fetch_assoc($result);
 
-            $dataArray = ["fio"=>$data['fio'],"passport_data"=>$data['passport_data'],
-                "home_adress"=>$data['home_adress'],"phone_number"=>$data['phone_number'],
-                "email"=>$data['email']
-            ];
-            $invalidKeys = [];
-            foreach($dataArray as $key=>$value){
-                if($value === null){
-                    $invalidKeys += [$key=>"$key is empty"];
-                }
-            }
-            if(count($invalidKeys) != 0){
-                return jsonMessage(400,['message'=>'Someone fields is empty', 'data'=>$invalidKeys]);
-            }
-            $sql = "INSERT INTO employers (fio, passport_data, home_adress, phone_number, email, fk_position, fk_depart) 
-                VALUES (".$data['fio'].",".$data['passport_data'].",".
-                $data['home_adress'].",".$data['phone_number'].",".$data['email']
-            .")";
-            mysqli_execute_query($conn,$sql);
-            return jsonMessage(200,['message'=>'success added employer']);
-        }
-        function edit($id,$data){
-
-        }
-        function delete($id){
-            $conn = conn();
-            $sql = "DELETE FROM patients WHERE id = $id";
-            $result = mysqli_execute_query($conn,$sql);
-            if($result){
-                return jsonMessage(200,['success'=>true,'message'=>'success delete patient']);
-            }
-            return jsonMessage(400,['success'=>false,'message'=>'error']);
+        if (empty($data)) {
+            return [];
+        }else{
+            return $data;
         }
     }
+
+    function add(string $data): string {
+        $data = json_decode($data, true);
+        $conn = conn();
+
+        $dataArray = [
+            "fio" => $data['fio'],
+            "passport_data" => $data['passport_data'],
+            "home_address" => $data['home_address'],
+            "phone_number" => $data['phone_number'],
+            "email" => $data['email']
+        ];
+
+        $invalidKeys = [];
+        foreach ($dataArray as $key => $value) {
+            if (empty($value)) {
+                $invalidKeys[$key] = "$key is empty";
+            }
+        }
+
+        if (!empty($invalidKeys)) {
+            return jsonMessage(400, ['message' => 'Some fields are empty', 'data' => $invalidKeys]);
+        }
+
+        $sql = "INSERT INTO patients (fio, passport_data, home_address, phone_number, email) 
+                VALUES (?, ?, ?, ?, ?)";
+        
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 'sssss', $data['fio'], $data['passport_data'], $data['home_address'], $data['phone_number'], $data['email']);
+        $result = mysqli_stmt_execute($stmt);
+
+        if ($result) {
+            return jsonMessage(200, ['message' => 'Successfully added patient']);
+        }
+        return jsonMessage(400, ['message' => 'Error adding patient']);
+    }
+
+    function edit(int $id, string $data): string {
+        // Реализация функции редактирования пациента
+    }
+
+    function delete(int $id): string {
+        $conn = conn();
+        $sql = "DELETE FROM patients WHERE id = ?";
+        
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        $result = mysqli_stmt_execute($stmt);
+
+        if ($result) {
+            return jsonMessage(200, ['success' => true, 'message' => 'Successfully deleted patient']);
+        }
+        return jsonMessage(400, ['success' => false, 'message' => 'Error deleting patient']);
+    }
+}

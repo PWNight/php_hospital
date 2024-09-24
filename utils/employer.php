@@ -1,7 +1,7 @@
-<?
+<?php
 include_once("utils.php");
     class Employer{
-        function showAll(){
+        function showAll(): array{
             $conn = conn();
             $sql = "SELECT 
                     e.fio, 
@@ -16,19 +16,18 @@ include_once("utils.php");
                 JOIN 
                     posts p ON p.post_id = e.fk_post
                 JOIN 
-                    departaments d ON d.dep_id = e.fk_depart
-            ";
+                    departaments d ON d.dep_id = e.fk_depart";
+
             $result = mysqli_query($conn,$sql);
-            $dataArray = mysqli_fetch_all($result,MYSQLI_ASSOC);
-            if(empty($dataArray)){
-                return jsonMessage(404,['message'=>'Employer not found']);
+            $data = mysqli_fetch_all($result,MYSQLI_ASSOC);
+            if( empty($data)) {
+                return [];
+            }else{
+                return $data;
             }
-            return jsonMessage(200,$dataArray);
         }
-        function showOne($id){
-            if(!isset($id)){
-                return jsonMessage(400,['message'=>'Id is empty']);
-            }
+        
+        function showOne($id): array{
             $conn = conn();
             $sql = "SELECT 
                     e.fio, 
@@ -48,11 +47,12 @@ include_once("utils.php");
                     e.id = $id
             ";
             $result = mysqli_query($conn,$sql);
-            $dataArray = mysqli_fetch_assoc($result);
-            if(empty($dataArray)){
-                return jsonMessage(404,['message'=>'Employer not found']);
+            $data = mysqli_fetch_assoc($result);
+            if(empty($data)){
+                return [];
+            }else{
+                return $data;
             }
-            return jsonMessage(200,$dataArray);
         }
         function add($data){
             $data = json_decode($data,1);
