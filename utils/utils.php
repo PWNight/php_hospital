@@ -6,8 +6,3 @@
         }
         return $conn;
     }
-    function jsonMessage($code,$body){
-        $json = json_encode($body,true);
-        http_response_code($code);
-        return $json;
-    }
