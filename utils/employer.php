@@ -109,7 +109,6 @@ include_once("utils.php");
         function delete($id){
             $conn = conn();
             $sql = "DELETE FROM employers WHERE id = $id";
-            mysqli_execute_query($conn,$sql);
-            return jsonMessage(200,['message'=>'success delete employer']);
+            return mysqli_execute_query($conn,$sql);
         }
     }

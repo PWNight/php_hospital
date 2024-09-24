@@ -32,8 +32,6 @@ include_once "utils.php";
         function delete($id){
             $conn = conn();
             $sql = "DELETE FROM coupons WHERE id = $id";
-            mysqli_execute_query($conn,$sql);
-            return jsonMessage(200,['message'=>'Success delete coupon']);
-
+            return mysqli_execute_query($conn,$sql);
         }
     }

@@ -37,10 +37,6 @@
         function delete($id){
             $conn = conn();
             $sql = "DELETE FROM schelude WHERE fk_employer = $id";
-            $result = mysqli_execute_query($conn,$sql);
-            if($result){
-                return jsonMessage(['success'=>true,'message'=>'success delete schelude']);
-            }
-            return jsonMessage(['success'=>false,'message'=>'error']);
+            return mysqli_execute_query($conn,$sql);
         }
     }

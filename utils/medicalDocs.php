@@ -31,10 +31,6 @@ include_once("utils.php");
         function delete($id){
             $conn = conn();
             $sql = "DELETE FROM med_docs WHERE id = $id";
-            $result = mysqli_execute_query($conn,$sql);
-            if($result){
-                return jsonMessage(['success'=>true,'message'=>'success delete medical document']);
-            }
-            return jsonMessage(['success'=>false,'message'=>'error']);
+            return mysqli_execute_query($conn,$sql);
         }
     }

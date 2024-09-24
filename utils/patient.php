@@ -118,15 +118,7 @@ class Patient {
 
     function delete(int $id): string {
         $conn = conn();
-        $sql = "DELETE FROM patients WHERE id = ?";
-        
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'i', $id);
-        $result = mysqli_stmt_execute($stmt);
-
-        if ($result) {
-            return jsonMessage(200, ['success' => true, 'message' => 'Successfully deleted patient']);
-        }
-        return jsonMessage(400, ['success' => false, 'message' => 'Error deleting patient']);
+        $sql = "DELETE FROM patients WHERE id = $id";
+        return mysqli_query($conn, $sql);
     }
 }
