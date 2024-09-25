@@ -10,6 +10,7 @@
         <h1>Просмотр таблиц</h1>
         <a href="show.php?table=patients">Пациенты</a>
         <a href="show.php?table=employers">Сотрудники</a>
+        <a href="show.php?table=appointments">Посещения</a>
     </div>
 </body>
 </html>

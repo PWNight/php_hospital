@@ -1,9 +1,10 @@
-<?
+<?php
 include_once 'utils.php';
     class Appointment{
         function showAll(){
             $conn = conn();
             $sql = "SELECT 
+                a.id,
                 p.fio AS patient_fio,
                 e.fio AS doctor_fio,
                 d.name AS depart_name,
@@ -24,16 +25,13 @@ include_once 'utils.php';
                 departaments d ON a.fk_depart = d.dep_id
             ";
             $result = mysqli_query($conn,$sql);
-            $dataArray = mysqli_fetch_all($result,MYSQLI_ASSOC);
-            if(empty($dataArray)){
-                return jsonMessage(404,['message'=>'Patients not found']);
+            $data = mysqli_fetch_all($result,MYSQLI_ASSOC);
+            if(empty($data)){
+                return [];
             }
-            return jsonMessage(200,$dataArray);
+            return $data;
         }
         function showOne($id){
-            if(!isset($id)){
-                return jsonMessage(400,['message'=>'Id is empty']);
-            }
             $conn = conn();
             $sql = "SELECT 
                     p.fio AS patient_fio,
@@ -57,11 +55,11 @@ include_once 'utils.php';
                 WHERE a.id = $id
             ";
             $result = mysqli_query($conn,$sql);
-            $dataArray = mysqli_fetch_assoc($result);
-            if(empty($dataArray)){
-                return jsonMessage(404,['message'=>'Patient not found']);
+            $data = mysqli_fetch_assoc($result);
+            if(empty($data)){
+                return [];
             }
-            return jsonMessage(200,$dataArray);
+            return $data;
         }
         function add($data){
             /*

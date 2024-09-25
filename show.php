@@ -118,7 +118,6 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
             }
             echo "</tbody></table>";
             break;
-
         case 'medicaldocs':
             // Implement logic for medical documents
             break;
@@ -126,7 +125,71 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
             // Implement logic for coupons
             break;
         case 'appointments':
-            // Implement logic for appointments
+            include_once 'utils/appointment.php';
+            $appointment = new Appointment();
+            $id = $_GET['id'] ?? null;
+
+            echo "<h2>Список посещений</h2>";
+            echo "<table>";
+            echo "<thead>
+                    <tr>
+                        <td>ФИО Пациента</td>
+                        <td>ФИО Врача</td>
+                        <td>Отдел</td>
+                        <td>Время начала приёма</td>
+                        <td>Время окончания</td>
+                        <td>Жалобы</td>
+                        <td>Диагноз</td>
+                        <td>Выписанный документ</td>
+                        <td>Примечания</td>
+                    </tr>
+                  </thead>
+                  <tbody>";
+
+            if ($id !== null) {
+                $data = $appointment->showOne($id);
+                if (!empty($data)) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($data['patient_fio']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['doctor_fio']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['depart_name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['timestamp_start']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['timestamp_end']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['complaints']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['diagnosis']) . "</td>";
+                    if(empty(htmlspecialchars($data['diagnosis']))){
+                        echo "<td>Отсутствует</td>";
+                    }else{
+                        echo "<td><a href='medicaldocs.php?id=". htmlspecialchars($data['diagnosis']) . "'>Посмотреть</a></td>";
+                    }
+                    echo "<td><a href='edit.php?table=appointments&id=". htmlspecialchars($id) ."'>Редактировать</a>";
+                    echo "</tr>";
+                } else {
+                    echo "<tr><td>Посещение не найдено.</td></tr>";
+                }
+            } else {
+                $data = $appointment->showAll();
+                if (!empty($data)) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($data['patient_fio']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['doctor_fio']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['depart_name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['timestamp_start']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['timestamp_end']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['complaints']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['diagnosis']) . "</td>";
+                    if(empty(htmlspecialchars($data['diagnosis']))){
+                        echo "<td>Отсутствует</td>";
+                    }else{
+                        echo "<td><a href='medicaldocs.php?id=". htmlspecialchars($data['diagnosis']) . "'>Посмотреть</a></td>";
+                    }
+                    echo "<td><a href='edit.php?table=appointments&id=". htmlspecialchars($data['id']) ."'>Редактировать</a>";
+                    echo "</tr>";
+                } else {
+                    echo "<tr><td>Посещения не найдены.</td></tr>";
+                }
+            }
+            echo "</tbody></table>";
             break;
     }
 } else {
