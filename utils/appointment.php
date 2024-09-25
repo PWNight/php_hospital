@@ -25,7 +25,8 @@ include_once 'utils.php';
                 departaments d ON a.fk_depart = d.dep_id
             ";
             $result = mysqli_query($conn,$sql);
-            $data = mysqli_fetch_all($result,MYSQLI_ASSOC);
+            $data = mysqli_fetch_assoc($result);
+            
             if(empty($data)){
                 return [];
             }
