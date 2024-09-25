@@ -42,7 +42,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
                     echo "<input type='text' name='phone_number' value='" . htmlspecialchars($data['phone_number']) . "'>";
                     echo "<input type='email' name='email' value='" . htmlspecialchars($data['email']) . "'>";
                     echo "<div>
-                        <select name='post_id'>
+                        <select name='fk_post'>
                             <option value='1'>Фельдшер</option>
                             <option value='2'>Медсестра</option>
                             <option value='3'>Хирург</option>
@@ -50,7 +50,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
                         </select>
                         Текущий: ". htmlspecialchars($data['post_name']) ."</div>";
                     echo "<div>
-                        <select name='departament_id'>
+                        <select name='fk_depart'>
                             <option value='1'>Хирургическое</option>
                             <option value='2'>Приёмное</option>
                             <option value='3'>Терапевтическое</option>

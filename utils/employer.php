@@ -36,6 +36,8 @@ include_once("utils.php");
                     e.home_address, 
                     e.phone_number, 
                     e.email, 
+                    e.fk_post,
+                    e.fk_depart,
                     p.name as post_name,
                     d.name as dep_name
                 FROM 
@@ -83,14 +85,15 @@ include_once("utils.php");
             mysqli_execute_query($conn,$sql);
             return jsonMessage(200,['message'=>'Success added employer']);
             */
-        }    function edit(int $id, array $data): bool {
+        }
+        function edit(int $id, array $data): bool {
             $fio = $data['fio'] ?? null;
             $passportData = $data['passport_data'] ?? null;
             $homeAddress = $data['home_address'] ?? null;
             $phoneNumber = $data['phone_number'] ?? null;
             $email = $data['email'] ?? null;
-            $postId = $data['post_id'] ?? null;
-            $departamentId = $data['departament_id'] ?? null;
+            $postId = $data['fk_post'] ?? null;
+            $departamentId = $data['fk_depart'] ?? null;
     
             $conn = conn();
             $sql = "UPDATE `employers` SET `fio` = ?,

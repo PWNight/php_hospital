@@ -29,7 +29,7 @@ class Patient {
         }
     }
     
-    function showOne(int $id): array {
+    function showOne(int $id) {
         $conn = conn();
         $sql = "SELECT 
                     p.fio, 

@@ -51,7 +51,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
                         echo "<td>" . htmlspecialchars($patientData['home_address']) . "</td>";
                         echo "<td>" . htmlspecialchars($patientData['phone_number']) . "</td>";
                         echo "<td>" . htmlspecialchars($patientData['email']) . "</td>";
-                        echo "<td>" . (empty($patientData['appointment_id']) ? "Отсутствует" : "<a href='appointments.php?id=" . htmlspecialchars($value['appointment_id']) . "'>Посмотреть</a>") . "</td>";
+                        echo "<td>" . (empty($patientData['appointment_id']) ? "Отсутствует" : "<a href='appointments.php?id=" . htmlspecialchars($patientData['appointment_id']) . "'>Посмотреть</a>") . "</td>";
                         echo "<td><a href='edit.php?table=patients&id=". htmlspecialchars($patientData['id']) ."'>Редактировать</a>";
                         echo "</tr>";
                     }
