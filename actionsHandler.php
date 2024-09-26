@@ -35,8 +35,11 @@ if ($valid) {
                 case 'add':
                     break;
                 case 'edit':
-                    $employer -> edit($uId,$_POST);
-                    header('Location: show.php?table=employers');
+                    if($employer -> edit($uId,$_POST)){
+                        header('Location: show.php?table=employers');
+                    }else{
+                        echo "Ошибка при выполнении запроса.";
+                    }
                     break;
                 case 'delete':
                     break;
