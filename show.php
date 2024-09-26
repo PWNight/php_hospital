@@ -37,7 +37,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
             if(empty(htmlspecialchars($data['diagnosis']))){
                 echo "<td>Отсутствует</td>";
             }else{
-                echo "<td><a href='show.php?table=medicaldocs&id=". htmlspecialchars($data['diagnosis']) . "'>Посмотреть</a></td>";
+                echo "<td><a href='show.php?table=medicaldocs&id=". htmlspecialchars($data['fk_meddoc']) . "'>Посмотреть</a></td>";
             }
         }
         echo "<td><a href='edit.php?table={$tableName}&id=" . htmlspecialchars($data['id']) . "'>Редактировать</a></td>";
