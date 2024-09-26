@@ -1,6 +1,5 @@
 <?php
 $tableName = $_GET['table'] ?? null;
-
 $allowedTables = ['patients', 'employers', 'medicaldocs', 'coupons', 'appointments'];
 
 if ($tableName !== null && in_array($tableName, $allowedTables)) {
@@ -9,8 +8,10 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
             include_once 'utils/patient.php';
             $patient = new Patient();
             $id = $_GET['id'] ?? null;
+
             if ($id !== null) {
                 $data = $patient->showOne($id);
+                
                 if (!empty($data)) {
                     echo "<form action='actionsHandler.php?action=edit&table=patients&id=$id' method='post' enctype='multipart/form-data'>";
                     echo "<input type='text' name='fio' value='" . htmlspecialchars($data['fio']) . "'>";
@@ -32,8 +33,10 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
             include_once 'utils/employer.php';
             $employer = new Employer();
             $id = $_GET['id'] ?? null;
+
             if ($id !== null) {
                 $data = $employer->showOne($id);
+
                 if (!empty($data)) {
                     echo "<form action='actionsHandler.php?action=edit&table=employers&id=$id' method='POST'>";
                     echo "<input type='text' name='fio' value='" . htmlspecialchars($data['fio']) . "'>";

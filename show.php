@@ -12,7 +12,6 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
     
     function displayRows($data,$tableName){
         echo "<tr>";
-
         if($tableName === 'patients' || $tableName === 'employers'){
             echo "<td>" . htmlspecialchars($data['fio']) . "</td>";
             echo "<td>" . htmlspecialchars($data['passport_data'] ?? '') . "</td>";
@@ -63,6 +62,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
 
             if ($id !== null) {
                 $data = $entity->showOne($id);
+                
                 if (!empty($data)) {
                     displayRows($data,$tableName);
                 } else {
@@ -70,6 +70,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
                 }
             } else {
                 $data = $entity->showAll();
+
                 if (!empty($data)) {
                     foreach ($data as $entityData) {
                         displayRows($entityData,$tableName);
@@ -99,6 +100,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
 
             if ($id !== null) {
                 $data = $entity->showOne($id);
+
                 if (!empty($data)) {
                     displayRows($data,$tableName);
                 } else {
@@ -106,6 +108,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
                 }
             } else {
                 $data = $entity->showAll();
+
                 if (!empty($data)) {
                     foreach ($data as $entityData) {
                         displayRows($entityData,$tableName);
@@ -139,6 +142,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
 
             if ($id !== null) {
                 $data = $entity->showOne($id);
+
                 if (!empty($data)) {
                     $data['id'] = $id;
                     displayRows($data,$tableName);
@@ -147,6 +151,7 @@ if ($tableName !== null && in_array($tableName, $allowedTables)) {
                 }
             } else {
                 $data = $entity->showAll();
+                
                 if (!empty($data)) {
                     displayRows($data,$tableName);
                 } else {

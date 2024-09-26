@@ -21,9 +21,10 @@ include_once("utils.php");
 
             $result = mysqli_query($conn,$sql);
             $data = mysqli_fetch_all($result,MYSQLI_ASSOC);
-            if( empty($data)) {
+            
+            if (empty($data)) {
                 return [];
-            }else{
+            } else {
                 return $data;
             }
         }
@@ -51,9 +52,9 @@ include_once("utils.php");
             ";
             $result = mysqli_query($conn,$sql);
             $data = mysqli_fetch_assoc($result);
-            if(empty($data)){
+            if (empty($data)) {
                 return [];
-            }else{
+            } else {
                 return $data;
             }
         }
@@ -103,9 +104,10 @@ include_once("utils.php");
     
             $stmt = mysqli_prepare($conn, $sql);
             $bindParams = mysqli_stmt_bind_param($stmt, "sssssssi", $fio, $passportData, $homeAddress, $phoneNumber, $email, $postId, $departamentId, $id);
-            if($stmt !== false && $bindParams !== false){
+            
+            if ($stmt !== false && $bindParams !== false) {
                 return mysqli_stmt_execute($stmt);
-            }else{
+            } else {
                 return false;
             }
         }

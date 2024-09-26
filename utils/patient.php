@@ -22,9 +22,10 @@ class Patient {
 
         $result = mysqli_query($conn, $sql);
         $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        
         if (empty($data)) {
             return [];
-        }else{
+        } else {
             return $data;
         }
     }
@@ -51,7 +52,7 @@ class Patient {
 
         if (empty($data)) {
             return [];
-        }else{
+        } else {
             return $data;
         }
     }
@@ -109,9 +110,10 @@ class Patient {
 
         $stmt = mysqli_prepare($conn, $sql);
         $bindParams = mysqli_stmt_bind_param($stmt, "ssssssi", $fio, $passportData, $birthDate, $homeAddress, $phoneNumber, $email, $id);
-        if($stmt !== false && $bindParams !== false){
+        
+        if ($stmt !== false && $bindParams !== false) {
             return mysqli_stmt_execute($stmt);
-        }else{
+        } else {
             return false;
         }
     }

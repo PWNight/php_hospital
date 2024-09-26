@@ -2,14 +2,17 @@
 $actionType = $_GET['action'] ?? null;
 $tableName = $_GET['table'] ?? null;
 $uId = $_GET['id'] ?? null;
+
 $allowedTables = ['patients', 'employers', 'medicaldocs', 'coupons', 'appointments'];
 $allowedAction = ['add','edit','delete'];
-if ($tableName !== null && $uId !== null && $actionType !== null && in_array($tableName, $allowedTables) && in_array($actionType, $allowedAction)) {
-    
+
+$valid = $tableName !== null && $uId !== null && $actionType !== null && in_array($tableName, $allowedTables) && in_array($actionType, $allowedAction);
+if ($valid) {
     switch($tableName){
         case 'patients':
             include_once('utils/patient.php');
             $patient = new Patient();
+
             switch($actionType){
                 case 'add':
                     break;
@@ -27,6 +30,7 @@ if ($tableName !== null && $uId !== null && $actionType !== null && in_array($ta
         case 'employers':
             include_once('utils/employer.php');
             $employer = new Employer();
+            
             switch($actionType){
                 case 'add':
                     break;
